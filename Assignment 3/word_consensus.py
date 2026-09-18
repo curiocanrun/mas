@@ -38,6 +38,7 @@ def _farthest_point_sampling(points, n, seed=0):
     selected[0] = rng.integers(total)
     dist = np.sum((points - points[selected[0]])**2, axis=1)
 
+    # maximize the minimum distance 
     for i in range(1, n):
         selected[i] = np.argmax(dist)
         d = np.sum((points - points[selected[i]])**2, axis=1)
@@ -86,9 +87,11 @@ history = []
 titles = [] 
 iter_in_letter = [] 
 
+# x[0] - initial coordinates of all agents
 X = np.random.uniform(-6, 6, (N, 2))
 X = X - np.mean(X, axis=0)
 
+# leader (only the first drone knows the true global destination map of the letter)
 pinning_gains = np.zeros(N)
 pinning_gains[0] = 1.0
 
